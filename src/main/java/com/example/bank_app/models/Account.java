@@ -1,6 +1,7 @@
 package com.example.bank_app.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Account {
@@ -20,5 +21,8 @@ public class Account {
 
     @ManyToOne
     private Customer customer;
+
+    @OneToMany(mappedBy = "account")
+    private List<Card> cards;
 
 }

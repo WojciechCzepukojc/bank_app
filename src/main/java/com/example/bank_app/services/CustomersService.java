@@ -1,6 +1,8 @@
 package com.example.bank_app.services;
 
 import com.example.bank_app.dto.CustomerDto;
+import com.example.bank_app.exceptions.ResourceNotFoundException;
+import com.example.bank_app.exceptions.ResurceValidationException;
 import com.example.bank_app.mappers.CustomersMapper;
 import com.example.bank_app.models.Customer;
 import com.example.bank_app.repositories.CustomersRepository;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,8 +45,22 @@ public class CustomersService {
 
     }
 
-    public void update (){
+    public void updateById(Long id, CustomerDto customerDto){
 
+      if (customersRepository.existsById(id)) {
+        throw new ResourceNotFoundException(String.format("Customer with id '%s' not found, id"));
+      }
+
+      Long customerDtoId = customerDto.getId();
+      if (id.equals(customerDtoId)) {
+        throw new ResurceValidationException(
+                String.format("Id parameter '%s' and customer id '%s' does not match",
+                        id, customerDtoId)
+        );
+      }
+
+      Customer customer = customersMapper.map(customerDto);
+      customersRepository.save(customer);
     }
 
     public void deleteById (Long id){

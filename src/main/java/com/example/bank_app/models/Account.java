@@ -1,8 +1,17 @@
 package com.example.bank_app.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Account {
 
@@ -19,10 +28,10 @@ public class Account {
     @Column(nullable = false, length = 28)
     private String iban;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<Card> cards;
 
 }

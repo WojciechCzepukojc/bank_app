@@ -1,11 +1,19 @@
 package com.example.bank_app.models;
 
 import com.example.bank_app.enums.CardType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Card {
 
@@ -26,7 +34,7 @@ public class Card {
     @Column(nullable = false, length = 10)
     private CardType cardType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
 }

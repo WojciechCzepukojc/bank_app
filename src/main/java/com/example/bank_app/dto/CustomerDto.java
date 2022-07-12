@@ -8,20 +8,20 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomerDto {
 
-
     private Long id;
-
     private String name;
-
     private String surname;
-
     private String pesel;
 
 
+    public Long getId() {
+        return id;
+    }
 }

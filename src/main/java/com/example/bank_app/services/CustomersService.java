@@ -6,14 +6,10 @@ import com.example.bank_app.exceptions.ResurceValidationException;
 import com.example.bank_app.mappers.CustomersMapper;
 import com.example.bank_app.models.Customer;
 import com.example.bank_app.repositories.CustomersRepository;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class CustomersService {
@@ -21,6 +17,7 @@ public class CustomersService {
     private final CustomersRepository customersRepository;
 
     private final CustomersMapper customersMapper;
+
 
   public CustomersService(CustomersRepository customersRepository, CustomersMapper customersMapper) {
     this.customersRepository = customersRepository;

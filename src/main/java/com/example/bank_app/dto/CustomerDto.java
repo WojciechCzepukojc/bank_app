@@ -24,4 +24,16 @@ public class CustomerDto {
     public Long getId() {
         return id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getPesel() {
+        return pesel;
+    }
 }

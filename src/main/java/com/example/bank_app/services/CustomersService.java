@@ -30,11 +30,14 @@ public class CustomersService {
   }
 
     public CustomerDto getById (Long id){
-      Customer customer = customersRepository.getReferenceById(id);
+      Customer customer = customersRepository.findById(id).orElseThrow(
+              () -> getCustomerNotFoundException(id));
       return customersMapper.map(customer);
     }
 
-    public List<CustomerDto> getPage () {
+
+
+  public List<CustomerDto> getPage () {
       return customersRepository.findAll()
               .stream()
               .map(customer -> customersMapper.map(customer))
@@ -45,7 +48,7 @@ public class CustomersService {
     public void updateById(Long id, CustomerDto customerDto){
 
       if (customersRepository.existsById(id)) {
-        throw new ResourceNotFoundException(String.format("Customer with id '%s' not found, id"));
+        throw getCustomerNotFoundException(id);
       }
 
       Long customerDtoId = customerDto.getId();
@@ -63,4 +66,8 @@ public class CustomersService {
     public void deleteById (Long id){
       customersRepository.deleteById(id);
     }
+
+  private ResourceNotFoundException getCustomerNotFoundException(Long id) {
+    return new ResourceNotFoundException(String.format("Customer with id '%s' not found", id));
+  }
 }

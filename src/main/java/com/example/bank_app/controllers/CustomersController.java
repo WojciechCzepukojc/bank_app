@@ -29,4 +29,16 @@ public class CustomersController {
         return customersService.getById(id);
     }
 
+    @PostMapping("create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void  create(@RequestBody CustomerDto customerDto){
+        customersService.create(customerDto);
+    }
+
+    @DeleteMapping("delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void  delete(@PathVariable Long id){
+        customersService.deleteById(id);
+    }
+
 }

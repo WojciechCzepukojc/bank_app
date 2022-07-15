@@ -35,8 +35,7 @@ public class CustomersService {
 
     public CustomerDto getById (Long id){
       log.info("Fetching customer with id '{}'", id);
-      Customer customer = customersRepository.findById(id).orElseThrow(
-              () -> getCustomerNotFoundException(id));
+      Customer customer = getCustomer(id);
       return customersMapper.map(customer);
     }
 
@@ -76,6 +75,10 @@ public class CustomersService {
       customersRepository.deleteById(id);
     }
 
+  public Customer getCustomer(Long id) {
+    return  customersRepository.findById(id)
+            .orElseThrow(() -> getCustomerNotFoundException(id));
+  }
   private ResourceNotFoundException getCustomerNotFoundException(Long id) {
     return new ResourceNotFoundException(String.format("Customer with id '%s' not found", id));
   }

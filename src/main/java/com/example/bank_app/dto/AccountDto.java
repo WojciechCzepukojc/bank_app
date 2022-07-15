@@ -14,17 +14,13 @@ public class AccountDto {
 
     private Long id;
 
-
     private String accountNumber;
-
 
     private String swift;
 
-
     private String iban;
 
-
-    private CustomerDto customer;
+    private Long customerId;
 
 
 

@@ -2,10 +2,12 @@ package com.example.bank_app.controllers;
 
 import com.example.bank_app.dto.CustomerDto;
 import com.example.bank_app.services.CustomersService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1/customers")
@@ -25,7 +27,7 @@ public class CustomersController {
 
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerDto getByIdPage(@PathVariable Long id){
+    public CustomerDto getById(@PathVariable Long id){
         return customersService.getById(id);
     }
 
@@ -34,6 +36,13 @@ public class CustomersController {
     public void  create(@RequestBody CustomerDto customerDto){
         customersService.create(customerDto);
     }
+    @PutMapping("update/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void  update(@PathVariable Long id,
+                        @RequestBody CustomerDto customerDto){
+        customersService.updateById(id, customerDto);
+    }
+
 
     @DeleteMapping("delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

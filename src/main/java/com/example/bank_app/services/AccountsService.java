@@ -38,5 +38,18 @@ public class AccountsService {
     log.debug("Account created succesfully");
   }
 
+    public List<AccountDto> getByCustomerId (Long id){
+        log.info("Fetching accounts by customer id '{}'", id);
+        List<Account> accountsByCustomerId = accountsRepository.findAccountByCustomerId(id);
+        return accountsByCustomerId.stream()
+                .map(account -> accountsMapper.map(account))
+                .collect(Collectors.toList());
+    }
+
+    public void deleteById (Long id){
+        log.info("Removing account with id '{}'. New customer: '{}'", id);
+        accountsRepository.deleteById(id);
+    }
+
 
 }

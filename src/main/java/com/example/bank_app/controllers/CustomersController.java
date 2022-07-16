@@ -43,7 +43,6 @@ public class CustomersController {
         customersService.updateById(id, customerDto);
     }
 
-
     @DeleteMapping("delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void  delete(@PathVariable Long id){

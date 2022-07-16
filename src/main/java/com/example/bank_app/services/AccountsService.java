@@ -51,5 +51,29 @@ public class AccountsService {
         accountsRepository.deleteById(id);
     }
 
+    public void updateById(Long id, AccountDto accountDto){
+        log.info("Updating account with id '{}'. New account: '{}'", id, accountDto);
+        if (!accountsRepository.existsById(id)) {
+            log.warn("Account with id '{}' not found", id);
+            throw getAccountNotFoundException(id);
+        }
+
+        Long accountDtoId = accountDto.getId();
+        if (!id.equals(accountDtoId)) {
+            log.warn("Id parameter '{}' and account id '{}' does not match", id, accountDtoId);
+            throw new ResurceValidationException(
+                    String.format("Id parameter '%s' and account id '%s' does not match",
+                            id, accountDtoId)
+            );
+        }
+
+        Account account = accountsMapper.map(accountDto);
+        accountsRepository.save(account);
+    }
+
+    private ResourceNotFoundException getAccountNotFoundException(Long id) {
+        return new ResourceNotFoundException(String.format("Account with id '%s' not found", id));
+    }
+
 
 }

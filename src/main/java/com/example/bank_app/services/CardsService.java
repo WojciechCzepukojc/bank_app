@@ -64,6 +64,11 @@ public class CardsService {
         cardsRepository.save(card);
     }
 
+    public void deleteById (Long id){
+        log.info("Removing card with id '{}'. New card: '{}'", id);
+        cardsRepository.deleteById(id);
+    }
+
     private ResourceNotFoundException getCardtNotFoundException(Long id) {
         return new ResourceNotFoundException(String.format("Card with id '%s' not found", id));
     }

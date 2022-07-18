@@ -47,7 +47,7 @@ public class AccountsService {
     }
 
     public void deleteById (Long id){
-        log.info("Removing account with id '{}'. New customer: '{}'", id);
+        log.info("Removing account with id '{}'. New account: '{}'", id);
         accountsRepository.deleteById(id);
     }
 

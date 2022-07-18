@@ -35,4 +35,10 @@ public class CardsController {
         cardsService.updateById(id, cardDto);
     }
 
+    @DeleteMapping("delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void  delete(@PathVariable Long id){
+        cardsService.deleteById(id);
+    }
+
 }

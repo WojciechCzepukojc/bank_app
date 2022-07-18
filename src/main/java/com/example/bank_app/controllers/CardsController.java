@@ -28,4 +28,11 @@ public class CardsController {
         return cardsService.getByAccountId(id);
     }
 
+    @PutMapping("update/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void  update(@PathVariable Long id,
+                        @RequestBody CardDto cardDto){
+        cardsService.updateById(id, cardDto);
+    }
+
 }

@@ -71,6 +71,11 @@ public class AccountsService {
         accountsRepository.save(account);
     }
 
+    public Account getAccount(Long id) {
+        return  accountsRepository.findById(id)
+                .orElseThrow(() -> getAccountNotFoundException(id));
+    }
+
     private ResourceNotFoundException getAccountNotFoundException(Long id) {
         return new ResourceNotFoundException(String.format("Account with id '%s' not found", id));
     }

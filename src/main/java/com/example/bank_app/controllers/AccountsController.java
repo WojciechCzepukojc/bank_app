@@ -22,6 +22,7 @@ public class AccountsController {
     public void  create(@RequestBody AccountDto accountDto){
         accountsService.create(accountDto);
     }
+
     @GetMapping("customer/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<AccountDto> getByCustomerId(@PathVariable Long id){

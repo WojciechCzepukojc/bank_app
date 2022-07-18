@@ -24,11 +24,12 @@ public class Card {
     @Column(unique = true, nullable = false, length = 16)
     private String cardNumber;
 
-    @Column(nullable = false, length = 16)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = false, length = 10)
     private LocalDate expiredDate;
 
     @Column(nullable = false, length = 3)
-    private LocalDate csvCode;
+    private String csvCode;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)

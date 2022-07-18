@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,11 +21,14 @@ public class CardDto {
 
     private String cardNumber;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate expiredDate;
 
-    private LocalDate csvCode;
+    private String csvCode;
 
     private CardType cardType;
+
+    private Long accountId;
 
 
 

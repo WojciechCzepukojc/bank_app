@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/cards")
 @RequiredArgsConstructor
@@ -18,6 +20,12 @@ public class CardsController {
     @ResponseStatus(HttpStatus.CREATED)
     public void  create(@RequestBody CardDto cardDto){
         cardsService.create(cardDto);
+    }
+
+    @GetMapping("account/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CardDto> getByAccountId(@PathVariable Long id){
+        return cardsService.getByAccountId(id);
     }
 
 }

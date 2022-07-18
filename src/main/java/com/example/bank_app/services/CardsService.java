@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -29,6 +32,14 @@ public class CardsService {
         card.setAccount(account);
         cardsRepository.save(card);
         log.debug("Card created succesfully");
+    }
+
+    public List<CardDto> getByAccountId (Long id){
+        log.info("Fetching cards by account id '{}'", id);
+        List<Card> cardsByAccoundId = cardsRepository.findCardByAccount_Id(id);
+        return cardsByAccoundId.stream()
+                .map(card -> cardsMapper.map(card))
+                .collect(Collectors.toList());
     }
 
 

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Setter
@@ -28,10 +29,16 @@ public class Account {
     @Column(nullable = false, length = 28)
     private String iban;
 
+    @Column(nullable = false, columnDefinition = "bigint default 0")
+    private BigDecimal balance;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<Card> cards;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    private List<Transfer> transfers;
 
 }

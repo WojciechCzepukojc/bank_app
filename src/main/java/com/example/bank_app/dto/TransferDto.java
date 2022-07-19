@@ -5,19 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CurrencyDto {
+public class TransferDto {
 
     private Long id;
 
-    private String code;
-
     private BigDecimal amount;
+
+    private String recipient;
+
+    private String recipientAccountNumber;
+
+    private String message;
 
 }

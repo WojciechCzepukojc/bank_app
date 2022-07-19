@@ -13,16 +13,25 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Currency {
+public class Transfer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 3)
-    private String code;
-
     @Column(nullable = false, columnDefinition = "bigint default 100")
     private BigDecimal amount;
+
+    @Column(nullable = false, length = 100)
+    private String recipient;
+
+    @Column(nullable = false, length = 26)
+    private String recipientAccountNumber;
+
+    @Column(nullable = false, length = 50)
+    private String message;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account account;
 
 }

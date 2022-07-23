@@ -3,6 +3,7 @@ package com.example.bank_app.dto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Builder
@@ -21,6 +22,8 @@ public class AccountDto {
     private String iban;
 
     private Long customerId;
+
+    private BigDecimal balance;
 
 
 

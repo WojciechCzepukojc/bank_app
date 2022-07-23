@@ -22,4 +22,10 @@ public class ErrorHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(WrongAmoundException.class)
+    public ResponseEntity<String> handleWrongAmound(WrongAmoundException ex){
+        log.error("WrongAmoundException: {}", ex.getMessage());
+        return  new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
 }

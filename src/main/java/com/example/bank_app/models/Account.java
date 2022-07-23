@@ -29,7 +29,7 @@ public class Account {
     @Column(nullable = false, length = 28)
     private String iban;
 
-    @Column(nullable = false, columnDefinition = "bigint default 0")
+    @Column(columnDefinition = "bigint default 1000")
     private BigDecimal balance;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -23,5 +23,7 @@ public class TransferDto {
 
     private String message;
 
+    private Long accountId;
+
 
 }

@@ -15,6 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
+import java.util.Optional;
+
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 
 
@@ -104,5 +107,15 @@ class CustomersServiceTest {
         Mockito.verify(customersRepository).existsById(id);
         Mockito.verifyNoMoreInteractions(customersMapper, customersRepository);
         Mockito.verifyNoInteractions(customersMapper);
+    }
+
+    @Test
+    void testGetCustomerSucces() {
+        //given
+        //when
+        Optional<Customer> optionalCustomer = customersRepository.findById(customerDto.getId());
+        //then
+        Mockito.verify(customersRepository).findById(customerDto.getId());
+        Mockito.doReturn(Optional.of(optionalCustomer)).when(customersRepository).findById(1L);
     }
 }

@@ -1,15 +1,18 @@
 package com.example.bank_app.repositories;
 
 import com.example.bank_app.models.Customer;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class CustomersRepositoryTest {
+class CustomersRepositoryTest{
 
     @Autowired
     private CustomersRepository customersRepository;
@@ -35,6 +38,23 @@ class CustomersRepositoryTest {
 
     @Test
     void testGetCustomerListSucces() {
+        //given
+        Customer customer = Customer.builder()
+                .name("Jurek")
+                .surname("Kiler")
+                .pesel("88062845876")
+                .build();
+
+        Customer expectedCustomer = customersRepository.save(customer);
+
+        //when
+        List<Customer> result = customersRepository.findAll();
+
+        //then
+        assertNotNull(result);
+        assertEquals(7, result.size());
+
+
 
     }
 }

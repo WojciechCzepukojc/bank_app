@@ -1,9 +1,11 @@
 package com.example.bank_app.services;
 
 import com.example.bank_app.dto.CustomerDto;
+import com.example.bank_app.exceptions.ResourceNotFoundException;
 import com.example.bank_app.mappers.CustomersMapper;
 import com.example.bank_app.models.Customer;
 import com.example.bank_app.repositories.CustomersRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -35,8 +37,8 @@ class CustomersServiceTest {
 
         customerDto = CustomerDto.builder()
                 .id(1L)
-                .name("Janek")
-                .surname("Smith")
+                .name("Maja")
+                .surname("Pszczółka")
                 .pesel("90083004219")
                 .build();
 
@@ -69,5 +71,21 @@ class CustomersServiceTest {
         Mockito.verify(customersMapper, times(2)).map(customerDto);
         Mockito.verify(customersRepository).save(Mockito.any(Customer.class));
         Mockito.verifyNoMoreInteractions(customersMapper, customersRepository);
+    }
+
+    @Test
+    void testUpdateCustomerNotFound() {
+        //given
+        final Long id = customerDto.getId();
+
+        Mockito.when(customersRepository.existsById(id)).thenReturn(false);
+
+        //when
+        Assertions.assertThrows(ResourceNotFoundException.class, ()->customersService.updateById(id, customerDto));
+
+        //then
+        Mockito.verify(customersRepository).existsById(id);
+        Mockito.verifyNoMoreInteractions(customersMapper, customersRepository);
+        Mockito.verifyNoInteractions(customersMapper);
     }
 }

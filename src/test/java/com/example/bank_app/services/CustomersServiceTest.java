@@ -12,39 +12,62 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
+import static org.mockito.Mockito.times;
+
 
 @SpringBootTest
 class CustomersServiceTest {
 
     @MockBean
-    CustomersRepository customersRepository;
+    private CustomersRepository customersRepository;
 
     @SpyBean
-    CustomersMapper customersMapper;
+    private CustomersMapper customersMapper;
 
     @Autowired
     private CustomersService customersService;
 
+    private CustomerDto customerDto;
+
     @BeforeEach
     void reset() {
         Mockito.reset(customersRepository);
+
+        customerDto = CustomerDto.builder()
+                .id(1L)
+                .name("Janek")
+                .surname("Smith")
+                .pesel("90083004219")
+                .build();
+
     }
 
     @Test
     void testCreateSucces() {
         //given
-        CustomerDto customerDto = CustomerDto.builder()
-                .name("Maja")
-                .surname("Pszczółka")
-                .pesel("85230585745")
-                .build();
         //when
         customersService.create(customerDto);
         //then
         Mockito.verify(customersMapper).map(customerDto);
         Mockito.verify(customersRepository).save(Mockito.any(Customer.class));
         Mockito.verifyNoMoreInteractions(customersMapper, customersRepository);
+    }
 
+    @Test
+    void testUpdateHappyPath() {
+        //given
+        final Long id = customerDto.getId();
+        final Customer expectedCustomer = customersMapper.map(customerDto);
 
+        Mockito.when(customersRepository.existsById(id)).thenReturn(true);
+
+        //when
+        customersService.updateById(id, customerDto);
+
+        //then
+        Mockito.verify(customersRepository).existsById(id);
+        Mockito.verify(customersMapper, times(2)).map(customerDto);
+        Mockito.verify(customersRepository).save(Mockito.any(Customer.class));
+        Mockito.verifyNoMoreInteractions(customersMapper, customersRepository);
     }
 }

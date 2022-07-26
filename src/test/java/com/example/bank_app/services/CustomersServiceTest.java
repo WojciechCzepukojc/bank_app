@@ -2,6 +2,7 @@ package com.example.bank_app.services;
 
 import com.example.bank_app.dto.CustomerDto;
 import com.example.bank_app.exceptions.ResourceNotFoundException;
+import com.example.bank_app.exceptions.ResurceValidationException;
 import com.example.bank_app.mappers.CustomersMapper;
 import com.example.bank_app.models.Customer;
 import com.example.bank_app.repositories.CustomersRepository;
@@ -82,6 +83,22 @@ class CustomersServiceTest {
 
         //when
         Assertions.assertThrows(ResourceNotFoundException.class, ()->customersService.updateById(id, customerDto));
+
+        //then
+        Mockito.verify(customersRepository).existsById(id);
+        Mockito.verifyNoMoreInteractions(customersMapper, customersRepository);
+        Mockito.verifyNoInteractions(customersMapper);
+    }
+
+    @Test
+    void testUpdateIdsConflict() {
+        //given
+        final Long id = 2L;
+
+        Mockito.when(customersRepository.existsById(id)).thenReturn(true);
+
+        //when
+        Assertions.assertThrows(ResurceValidationException.class, ()->customersService.updateById(id, customerDto));
 
         //then
         Mockito.verify(customersRepository).existsById(id);

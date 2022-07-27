@@ -5,7 +5,6 @@ import com.example.bank_app.exceptions.ResourceNotFoundException;
 import com.example.bank_app.exceptions.ResurceValidationException;
 import com.example.bank_app.mappers.AccountsMapper;
 import com.example.bank_app.models.Account;
-import com.example.bank_app.models.Customer;
 import com.example.bank_app.repositories.AccountsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

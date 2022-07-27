@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 
 @SpringBootTest
@@ -54,6 +55,16 @@ class CardsServiceTest {
         Mockito.verify(cardsMapper).map(cardDto);
         Mockito.verify(cardsRepository).save(Mockito.any(Card.class));
         Mockito.verifyNoMoreInteractions(cardsMapper, cardsRepository);
+    }
+
+    @Test
+    void testGetCardSucces() {
+        //given
+        //when
+        Optional<Card> optionalCard = cardsRepository.findById(cardDto.getId());
+        //then
+        Mockito.verify(cardsRepository).findById(cardDto.getId());
+        Mockito.doReturn(Optional.of(optionalCard)).when(cardsRepository).findById(1L);
     }
 
 

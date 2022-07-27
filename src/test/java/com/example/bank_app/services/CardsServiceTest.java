@@ -5,7 +5,6 @@ import com.example.bank_app.enums.CardType;
 import com.example.bank_app.exceptions.ResourceNotFoundException;
 import com.example.bank_app.exceptions.ResurceValidationException;
 import com.example.bank_app.mappers.CardsMapper;
-import com.example.bank_app.models.Account;
 import com.example.bank_app.models.Card;
 import com.example.bank_app.repositories.CardsRepository;
 import org.junit.jupiter.api.Assertions;
@@ -122,6 +121,16 @@ class CardsServiceTest {
         Mockito.verifyNoInteractions(cardsMapper);
     }
 
-
+    @Test
+    void testDeleteCardSucces() {
+        //given
+        Card card = cardsMapper.map(cardDto);
+        //when
+        cardsService.deleteById(card.getId());
+        //then
+        Mockito.verify(cardsMapper).map(cardDto);
+        Mockito.verify(cardsRepository).deleteById(card.getId());
+        Mockito.verifyNoMoreInteractions(cardsMapper, cardsRepository);
+    }
 
     }

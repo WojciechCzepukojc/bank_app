@@ -3,9 +3,7 @@ package com.example.bank_app.services;
 import com.example.bank_app.dto.AccountDto;
 import com.example.bank_app.mappers.AccountsMapper;
 import com.example.bank_app.models.Account;
-import com.example.bank_app.models.Customer;
 import com.example.bank_app.repositories.AccountsRepository;
-import com.example.bank_app.repositories.CustomersRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,8 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class AccountsServiceTest {
@@ -56,6 +54,16 @@ class AccountsServiceTest {
         Mockito.verify(accountsMapper).map(accountDto);
         Mockito.verify(accountsRepository).save(Mockito.any(Account.class));
         Mockito.verifyNoMoreInteractions(accountsMapper, accountsRepository);
+    }
+
+    @Test
+    void testGetAccountSucces() {
+        //given
+        //when
+        Optional<Account> optionalAccount = accountsRepository.findById(accountDto.getId());
+        //then
+        Mockito.verify(accountsRepository).findById(accountDto.getId());
+        Mockito.doReturn(Optional.of(optionalAccount)).when(accountsRepository).findById(1L);
     }
 
 }

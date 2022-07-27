@@ -118,4 +118,16 @@ class CustomersServiceTest {
         Mockito.verify(customersRepository).findById(customerDto.getId());
         Mockito.doReturn(Optional.of(optionalCustomer)).when(customersRepository).findById(1L);
     }
+
+    @Test
+    void testDeleteSucces() {
+        //given
+        Customer customer = customersMapper.map(customerDto);
+        //when
+        customersService.deleteById(customer.getId());
+        //then
+        Mockito.verify(customersMapper).map(customerDto);
+        Mockito.verify(customersRepository).deleteById(customer.getId());
+        Mockito.verifyNoMoreInteractions(customersMapper, customersRepository);
+    }
 }

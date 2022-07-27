@@ -5,6 +5,7 @@ import com.example.bank_app.exceptions.ResourceNotFoundException;
 import com.example.bank_app.exceptions.ResurceValidationException;
 import com.example.bank_app.mappers.AccountsMapper;
 import com.example.bank_app.models.Account;
+import com.example.bank_app.models.Customer;
 import com.example.bank_app.repositories.AccountsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +52,7 @@ class AccountsServiceTest {
     }
 
     @Test
-    void testCreateSucces() {
+    void testCreateAccountSucces() {
         //given
         //when
         accountsService.create(accountDto);
@@ -119,6 +120,18 @@ class AccountsServiceTest {
         Mockito.verify(accountsRepository).existsById(id);
         Mockito.verifyNoMoreInteractions(accountsMapper, accountsRepository);
         Mockito.verifyNoInteractions(accountsMapper);
+    }
+
+    @Test
+    void testDeleteAccountSucces() {
+        //given
+        Account account = accountsMapper.map(accountDto);
+        //when
+        accountsService.deleteById(account.getId());
+        //then
+        Mockito.verify(accountsMapper).map(accountDto);
+        Mockito.verify(accountsRepository).deleteById(account.getId());
+        Mockito.verifyNoMoreInteractions(accountsMapper, accountsRepository);
     }
 
 }
